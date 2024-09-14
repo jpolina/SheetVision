@@ -7,7 +7,15 @@ from best_fit import fit
 from rectangle import Rectangle
 from note import Note
 from random import randint
+import os, paramiko
 from midiutil.MidiFile import MIDIFile
+
+hostname = "123.456.7.89" # Raspberry Pi IP address
+port = 22
+username = 'pi'
+password = 'asdf'
+local_path = 'output.mid'
+remote_path = '/home/pi/output.mid'
 
 staff_files = [
     "resources/template/staff2.png", 
@@ -249,4 +257,16 @@ if __name__ == "__main__":
     binfile = open("output.mid", 'wb')
     midi.writeFile(binfile)
     binfile.close()
-    open_file('output.mid')
+    # open_file('output.mid')
+
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    try:
+        ssh.connect(hostname, port, username, password)
+        sftp = ssh.open_sftp()
+        sftp.put(local_path, remote_path)
+        sftp.close()
+        ssh.close()
+    except Exception as e:
+        print(e)
+        ssh.close()
