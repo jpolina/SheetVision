@@ -87,3 +87,16 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# generate images
+sharp_recs_img.png
+staff_boxes_img.png
+staff_recs_img.png
+quarter_recs_img.png
+whole_recs_img.png
+res.png
+flat_recs_img.png
+half_recs_img.png
+
+# output midi file
+output.mid
