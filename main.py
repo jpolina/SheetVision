@@ -240,7 +240,11 @@ if __name__ == "__main__":
             midi.addNote(track,channel,pitch,time,duration,volume)
             time += duration
 
-    midi.addNote(track,channel,pitch,time,4,0)
+    try:
+        midi.addNote(track,channel,pitch,time,4,0)
+    except NameError: 
+        # pitch may not be defined, which causes a crash
+        pass
     # And write it to disk.
     binfile = open("output.mid", 'wb')
     midi.writeFile(binfile)
